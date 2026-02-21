@@ -1,0 +1,31 @@
+# Speech recognition (offline)
+vosk>=0.3.45
+
+# Text-to-speech (offline, neural)
+piper-tts>=1.4.0
+
+# Audio I/O
+PyAudio>=0.2.14
+
+# Display / animation
+pygame>=2.6.0
+
+# Graph-based navigation
+networkx>=3.2
+
+# Fuzzy string matching for intent recognition
+fuzzywuzzy>=0.18.0
+python-Levenshtein>=0.25.0
+
+# Video playback
+python-vlc>=3.0.21203
+
+# State machine
+python-statemachine>=2.5.0
+
+# Testing
+pytest>=8.0.0
+pytest-cov>=5.0.0
+
+# I2C for UPS HAT (Pi only, will fail gracefully on Windows)
+# smbus2>=0.5.0

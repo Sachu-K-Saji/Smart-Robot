@@ -1,0 +1,192 @@
+{
+  "nodes": {
+    "main_gate": {
+      "name": "Main Gate",
+      "x": 0,
+      "y": 0,
+      "type": "entrance"
+    },
+    "fountain": {
+      "name": "Fountain Plaza",
+      "x": 80,
+      "y": 0,
+      "type": "landmark"
+    },
+    "library": {
+      "name": "Central Library",
+      "x": 80,
+      "y": 80,
+      "type": "building"
+    },
+    "admin_office": {
+      "name": "Admin Office",
+      "x": 160,
+      "y": 0,
+      "type": "office"
+    },
+    "auditorium": {
+      "name": "Auditorium",
+      "x": 160,
+      "y": 80,
+      "type": "building"
+    },
+    "cs_dept": {
+      "name": "CS Department",
+      "x": 240,
+      "y": 0,
+      "type": "department"
+    },
+    "it_dept": {
+      "name": "IT Department",
+      "x": 240,
+      "y": 40,
+      "type": "department"
+    },
+    "comp_lab": {
+      "name": "Computer Lab",
+      "x": 280,
+      "y": 20,
+      "type": "lab"
+    },
+    "ece_dept": {
+      "name": "ECE Department",
+      "x": 240,
+      "y": 120,
+      "type": "department"
+    },
+    "mech_dept": {
+      "name": "Mechanical Department",
+      "x": 320,
+      "y": 80,
+      "type": "department"
+    },
+    "workshop": {
+      "name": "Workshop",
+      "x": 360,
+      "y": 80,
+      "type": "facility"
+    },
+    "civil_dept": {
+      "name": "Civil Department",
+      "x": 320,
+      "y": 160,
+      "type": "department"
+    },
+    "cafeteria": {
+      "name": "Cafeteria",
+      "x": 160,
+      "y": 160,
+      "type": "facility"
+    },
+    "sports_ground": {
+      "name": "Sports Ground",
+      "x": 80,
+      "y": 200,
+      "type": "outdoor"
+    },
+    "parking": {
+      "name": "Parking Lot",
+      "x": 0,
+      "y": 80,
+      "type": "outdoor"
+    }
+  },
+  "edges": [
+    {
+      "from": "main_gate",
+      "to": "fountain",
+      "distance": 80,
+      "direction": "Walk straight ahead from the main gate for about 1 minute. You will reach the fountain plaza."
+    },
+    {
+      "from": "main_gate",
+      "to": "parking",
+      "distance": 80,
+      "direction": "Turn left from the main gate. The parking lot is about 1 minute walk on your left."
+    },
+    {
+      "from": "fountain",
+      "to": "library",
+      "distance": 80,
+      "direction": "From the fountain plaza, turn right. Walk straight for about 1 minute. The library is the large building ahead."
+    },
+    {
+      "from": "fountain",
+      "to": "admin_office",
+      "distance": 80,
+      "direction": "From the fountain plaza, continue straight ahead. The admin office is in the main building on your left."
+    },
+    {
+      "from": "admin_office",
+      "to": "cs_dept",
+      "distance": 80,
+      "direction": "From the admin office, walk towards Block A on your right. The CS department is on the second floor."
+    },
+    {
+      "from": "admin_office",
+      "to": "auditorium",
+      "distance": 80,
+      "direction": "From the admin office, turn right and walk towards the auditorium building."
+    },
+    {
+      "from": "cs_dept",
+      "to": "it_dept",
+      "distance": 40,
+      "direction": "The IT department is one floor above the CS department in Block A. Take the stairs up."
+    },
+    {
+      "from": "cs_dept",
+      "to": "comp_lab",
+      "distance": 50,
+      "direction": "The computer lab is at the end of the corridor on the second floor of Block A."
+    },
+    {
+      "from": "auditorium",
+      "to": "ece_dept",
+      "distance": 60,
+      "direction": "From the auditorium, walk towards Block B. The ECE department is on the first floor."
+    },
+    {
+      "from": "auditorium",
+      "to": "cafeteria",
+      "distance": 80,
+      "direction": "From the auditorium, walk south. The cafeteria is the building with the green roof."
+    },
+    {
+      "from": "ece_dept",
+      "to": "mech_dept",
+      "distance": 100,
+      "direction": "From Block B, walk east towards Block C. The mechanical department is on the ground floor."
+    },
+    {
+      "from": "mech_dept",
+      "to": "workshop",
+      "distance": 40,
+      "direction": "The workshop is behind Block C, just a short walk from the mechanical department."
+    },
+    {
+      "from": "mech_dept",
+      "to": "civil_dept",
+      "distance": 100,
+      "direction": "From Block C, continue south to Block D. The civil department is on the ground floor."
+    },
+    {
+      "from": "cafeteria",
+      "to": "sports_ground",
+      "distance": 60,
+      "direction": "From the cafeteria, walk south past the garden. The sports ground is the open area ahead."
+    },
+    {
+      "from": "library",
+      "to": "cafeteria",
+      "distance": 100,
+      "direction": "Exit the library from the main entrance. Turn left and walk for about 2 minutes. The cafeteria is ahead."
+    },
+    {
+      "from": "parking",
+      "to": "sports_ground",
+      "distance": 120,
+      "direction": "From the parking lot, walk south along the campus boundary. The sports ground is on your right."
+    }
+  ]
+}
