@@ -194,7 +194,8 @@ class CampusRobot:
             return (
                 "Hello! Welcome to our campus. I can help you with "
                 "directions, finding faculty, looking up students, "
-                "or department information. Just ask me anything!"
+                "department information, or general campus queries "
+                "like hostel, library, admissions, and more. Just ask me anything!"
             )
 
         elif intent.intent == "farewell":
@@ -206,7 +207,9 @@ class CampusRobot:
                 "Ask me for directions to any building or department. "
                 "Ask me about a professor or faculty member. "
                 "Ask me to look up a student by name or roll number. "
-                "Or ask me about department information. What would you like?"
+                "Ask about department information. "
+                "Or ask me about campus facilities like the hostel, "
+                "library, admissions, courses, and more. What would you like?"
             )
 
         elif intent.intent == "navigation":
@@ -221,7 +224,14 @@ class CampusRobot:
         elif intent.intent == "department_info":
             return self._handle_department_info(intent)
 
+        elif intent.intent == "campus_info":
+            return self._handle_campus_info(intent)
+
         else:
+            # Try knowledge base before giving up
+            kb_response = self._handle_campus_info(intent)
+            if kb_response:
+                return kb_response
             return (
                 "I'm sorry, I didn't understand that. "
                 "You can ask me for directions, about faculty, "
@@ -262,17 +272,22 @@ class CampusRobot:
             return f"I couldn't find any faculty matching '{faculty_name}'."
 
         f = results[0]
-        dept_cursor = self.database.conn.execute(
-            "SELECT name FROM departments WHERE id = ?", (f["department_id"],)
-        )
-        dept_row = dept_cursor.fetchone()
-        dept_name = dept_row["name"] if dept_row else "unknown department"
+        dept_name = f.get("department_name") or "unknown department"
+        college_name = f.get("college_short_name") or f.get("college_name") or ""
 
-        return (
-            f"{f['name']} is a {f['designation']} in the {dept_name}. "
-            f"Their office is at {f['office_location']}. "
-            f"You can reach them at {f['email']}."
-        )
+        parts = [f"{f['name']} is a {f['designation']} in {dept_name}"]
+        if college_name:
+            parts[0] += f" at {college_name}"
+        parts[0] += "."
+
+        if f.get("qualification"):
+            parts.append(f"Qualification: {f['qualification']}.")
+        if f.get("office_location"):
+            parts.append(f"Their office is at {f['office_location']}.")
+        if f.get("email"):
+            parts.append(f"You can reach them at {f['email']}.")
+
+        return " ".join(parts)
 
     def _handle_student_lookup(self, intent: ParsedIntent) -> str:
         """Handle student lookup requests."""
@@ -294,6 +309,26 @@ class CampusRobot:
             f"section {s['section']}."
         )
 
+    def _handle_campus_info(self, intent: ParsedIntent) -> str:
+        """Handle general campus information queries using the knowledge base."""
+        query = intent.raw_text
+        results = self.database.search_knowledge_base(query)
+        if not results:
+            return ""
+
+        # Use the top matching paragraph
+        top = results[0]
+        content = top["content"]
+        source_page = top.get("page_title", "")
+
+        # Truncate very long paragraphs for speech
+        if len(content) > 500:
+            content = content[:497] + "..."
+
+        if source_page:
+            return f"{content} This information is from the {source_page} page."
+        return content
+
     def _handle_department_info(self, intent: ParsedIntent) -> str:
         """Handle department information requests."""
         dept_name = intent.entities.get("department_name")
@@ -306,20 +341,31 @@ class CampusRobot:
         if not dept:
             return f"I couldn't find a department matching '{dept_name}'."
 
-        hod_name = "not assigned"
-        if dept["head_faculty_id"]:
+        college_name = dept.get("college_short_name") or dept.get("college_name") or ""
+        parts = [f"The {dept['name']}"]
+        if college_name:
+            parts[0] += f" is part of {college_name}"
+        parts[0] += "."
+
+        if dept.get("building"):
+            parts.append(f"It is located in {dept['building']}, floor {dept.get('floor', 0)}.")
+
+        if dept.get("head_faculty_id"):
             hod_cursor = self.database.conn.execute(
                 "SELECT name FROM faculty WHERE id = ?", (dept["head_faculty_id"],)
             )
             hod_row = hod_cursor.fetchone()
             if hod_row:
-                hod_name = hod_row["name"]
+                parts.append(f"The head of department is {hod_row['name']}.")
 
-        return (
-            f"The {dept['name']} is located in {dept['building']}, "
-            f"floor {dept['floor']}. The head of department is {hod_name}. "
-            f"You can contact them at {dept['phone']}."
-        )
+        faculty_count = len(self.database.get_faculty_by_department(dept["id"]))
+        if faculty_count:
+            parts.append(f"It has {faculty_count} faculty members.")
+
+        if dept.get("phone"):
+            parts.append(f"You can contact them at {dept['phone']}.")
+
+        return " ".join(parts)
 
     # ── Battery callbacks ─────────────────────────────────────
 

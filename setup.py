@@ -38,6 +38,25 @@ def create_database():
     print("Database created successfully.")
 
 
+def import_crawled_data():
+    """Import crawled college data into the database if available."""
+    faculty_file = BASE_DIR / "data" / "faculty_summary.json"
+    crawled_file = BASE_DIR / "data" / "lourdes_matha_all_data.json"
+
+    if not faculty_file.exists() or not crawled_file.exists():
+        print("\nCrawled data files not found, skipping import.")
+        print("  To import real campus data, place these files in data/:")
+        print(f"  - {faculty_file.name}")
+        print(f"  - {crawled_file.name}")
+        print("  Then run: python data/import_crawled_data.py")
+        return
+
+    print("\nImporting crawled campus data...")
+    from data.import_crawled_data import import_data
+    import_data()
+    print("Crawled data imported successfully.")
+
+
 def check_models():
     """Check if required model files exist and provide download instructions."""
     vosk_dir = BASE_DIR / "data" / "vosk-model-small-en-us-0.15"
@@ -107,6 +126,7 @@ def main():
     create_directories()
     install_requirements()
     create_database()
+    import_crawled_data()
     check_models()
 
     run_tests_input = input("\nRun tests now? [y/N]: ").strip().lower()

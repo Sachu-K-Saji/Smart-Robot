@@ -22,20 +22,32 @@ def create_database(db_path: str = None):
 
     # ── Schema ────────────────────────────────────────────────
     cursor.executescript("""
+        DROP TABLE IF EXISTS knowledge_base_fts;
+        DROP TABLE IF EXISTS knowledge_base;
         DROP TABLE IF EXISTS faculty_fts;
         DROP TABLE IF EXISTS routes;
         DROP TABLE IF EXISTS locations;
         DROP TABLE IF EXISTS students;
         DROP TABLE IF EXISTS faculty;
         DROP TABLE IF EXISTS departments;
+        DROP TABLE IF EXISTS colleges;
+
+        CREATE TABLE colleges (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT UNIQUE NOT NULL,
+            short_name TEXT,
+            website TEXT
+        );
 
         CREATE TABLE departments (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT UNIQUE NOT NULL,
-            building TEXT NOT NULL,
+            name TEXT NOT NULL,
+            college_id INTEGER,
+            building TEXT,
             floor INTEGER DEFAULT 0,
             head_faculty_id INTEGER,
-            phone TEXT
+            phone TEXT,
+            FOREIGN KEY (college_id) REFERENCES colleges(id)
         );
 
         CREATE TABLE faculty (
@@ -43,7 +55,9 @@ def create_database(db_path: str = None):
             name TEXT NOT NULL,
             department_id INTEGER NOT NULL,
             designation TEXT NOT NULL,
+            qualification TEXT,
             email TEXT,
+            phone TEXT,
             office_location TEXT,
             FOREIGN KEY (department_id) REFERENCES departments(id)
         );
@@ -75,39 +89,66 @@ def create_database(db_path: str = None):
             estimated_time_minutes REAL
         );
 
+        CREATE TABLE knowledge_base (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            source TEXT NOT NULL,
+            url TEXT,
+            page_title TEXT,
+            content TEXT NOT NULL,
+            content_type TEXT NOT NULL
+        );
+
         CREATE VIRTUAL TABLE faculty_fts USING fts5(
             name, designation, content='faculty', content_rowid='id'
         );
+
+        CREATE VIRTUAL TABLE knowledge_base_fts USING fts5(
+            page_title, content, content='knowledge_base', content_rowid='id'
+        );
     """)
+
+    # ── Sample College ───────────────────────────────────────
+    cursor.execute(
+        "INSERT INTO colleges (name, short_name, website) VALUES (?, ?, ?)",
+        ("Sample College of Engineering", "SCE", "https://example.com"),
+    )
 
     # ── Sample Departments ────────────────────────────────────
     departments = [
-        ("Computer Science and Engineering", "Block A", 2, None, "044-27152000"),
-        ("Electronics and Communication Engineering", "Block B", 1, None, "044-27152001"),
-        ("Mechanical Engineering", "Block C", 1, None, "044-27152002"),
-        ("Civil Engineering", "Block D", 0, None, "044-27152003"),
-        ("Information Technology", "Block A", 3, None, "044-27152004"),
+        ("Computer Science and Engineering", 1, "Block A", 2, None, "044-27152000"),
+        ("Electronics and Communication Engineering", 1, "Block B", 1, None, "044-27152001"),
+        ("Mechanical Engineering", 1, "Block C", 1, None, "044-27152002"),
+        ("Civil Engineering", 1, "Block D", 0, None, "044-27152003"),
+        ("Information Technology", 1, "Block A", 3, None, "044-27152004"),
     ]
     cursor.executemany(
-        "INSERT INTO departments (name, building, floor, head_faculty_id, phone) "
-        "VALUES (?, ?, ?, ?, ?)",
+        "INSERT INTO departments (name, college_id, building, floor, head_faculty_id, phone) "
+        "VALUES (?, ?, ?, ?, ?, ?)",
         departments,
     )
 
     # ── Sample Faculty ────────────────────────────────────────
     faculty = [
-        ("Dr. Rajesh Kumar", 1, "Professor and HOD", "rajesh.k@college.edu", "Block A, Room 201"),
-        ("Dr. Priya Sharma", 1, "Associate Professor", "priya.s@college.edu", "Block A, Room 205"),
-        ("Dr. Suresh Babu", 2, "Professor and HOD", "suresh.b@college.edu", "Block B, Room 101"),
-        ("Dr. Meena Devi", 2, "Assistant Professor", "meena.d@college.edu", "Block B, Room 105"),
-        ("Dr. Arun Prakash", 3, "Professor and HOD", "arun.p@college.edu", "Block C, Room 102"),
-        ("Prof. Kavitha Rajan", 4, "Associate Professor", "kavitha.r@college.edu", "Block D, Room 003"),
-        ("Dr. Venkatesh Murthy", 5, "Professor and HOD", "venkatesh.m@college.edu", "Block A, Room 301"),
-        ("Dr. Lakshmi Narayanan", 1, "Assistant Professor", "lakshmi.n@college.edu", "Block A, Room 210"),
+        ("Dr. Rajesh Kumar", 1, "Professor and HOD", "Ph.D in Computer Science",
+         "rajesh.k@college.edu", None, "Block A, Room 201"),
+        ("Dr. Priya Sharma", 1, "Associate Professor", "M.Tech, Ph.D",
+         "priya.s@college.edu", None, "Block A, Room 205"),
+        ("Dr. Suresh Babu", 2, "Professor and HOD", "Ph.D in VLSI Design",
+         "suresh.b@college.edu", None, "Block B, Room 101"),
+        ("Dr. Meena Devi", 2, "Assistant Professor", "M.Tech",
+         "meena.d@college.edu", None, "Block B, Room 105"),
+        ("Dr. Arun Prakash", 3, "Professor and HOD", "Ph.D in Thermal Engineering",
+         "arun.p@college.edu", None, "Block C, Room 102"),
+        ("Prof. Kavitha Rajan", 4, "Associate Professor", "M.E in Structural Engineering",
+         "kavitha.r@college.edu", None, "Block D, Room 003"),
+        ("Dr. Venkatesh Murthy", 5, "Professor and HOD", "Ph.D in Software Engineering",
+         "venkatesh.m@college.edu", None, "Block A, Room 301"),
+        ("Dr. Lakshmi Narayanan", 1, "Assistant Professor", "M.Tech in AI",
+         "lakshmi.n@college.edu", None, "Block A, Room 210"),
     ]
     cursor.executemany(
-        "INSERT INTO faculty (name, department_id, designation, email, office_location) "
-        "VALUES (?, ?, ?, ?, ?)",
+        "INSERT INTO faculty (name, department_id, designation, qualification, "
+        "email, phone, office_location) VALUES (?, ?, ?, ?, ?, ?, ?)",
         faculty,
     )
 
@@ -180,10 +221,27 @@ def create_database(db_path: str = None):
         routes,
     )
 
-    # ── Populate FTS5 Index ───────────────────────────────────
+    # ── Sample Knowledge Base ─────────────────────────────────
+    kb_entries = [
+        ("Sample College", "https://example.com", "Home",
+         "Welcome to Sample College of Engineering, a premier institution.", "paragraph"),
+        ("Sample College", "https://example.com/library", "Library",
+         "The central library has over 15,000 books and journals.", "paragraph"),
+    ]
+    cursor.executemany(
+        "INSERT INTO knowledge_base (source, url, page_title, content, content_type) "
+        "VALUES (?, ?, ?, ?, ?)",
+        kb_entries,
+    )
+
+    # ── Populate FTS5 Indexes ─────────────────────────────────
     cursor.execute(
         "INSERT INTO faculty_fts (rowid, name, designation) "
         "SELECT id, name, designation FROM faculty"
+    )
+    cursor.execute(
+        "INSERT INTO knowledge_base_fts (rowid, page_title, content) "
+        "SELECT id, page_title, content FROM knowledge_base"
     )
 
     conn.commit()

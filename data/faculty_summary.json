@@ -1,0 +1,697 @@
+{
+  "institution": "Lourdes Matha Group of Institutions",
+  "location": "Lourdes Hills, Kuttichal P.O, Thiruvananthapuram, Kerala - 695 574",
+  "colleges": [
+    {
+      "name": "LMCST — Lourdes Matha College of Science and Technology",
+      "website": "https://lmcst.ac.in",
+      "departments": [
+        {
+          "department": "Applied Science & Humanities",
+          "teaching_faculty": [
+            {
+              "name": "Ms.SUSAN ROSH JOSE",
+              "designation": "HOD",
+              "qualification": "M.Sc, M.Phil,MCA"
+            },
+            {
+              "name": "Mr CAROLD WILSON LAZER J",
+              "designation": "ASSISTANT PROFESSOR",
+              "qualification": "M.Sc, M.Phil"
+            },
+            {
+              "name": "Ms.JOMOL JOSEPH",
+              "designation": "ASSISTANT PROFESSOR",
+              "qualification": "MA ECONOMICS"
+            },
+            {
+              "name": "Ms. Geethu Jose",
+              "designation": "Assistant Professor",
+              "qualification": "MSc. Mathematics,BEd"
+            }
+          ],
+          "technical_staff": []
+        },
+        {
+          "department": "Civil Engineering",
+          "teaching_faculty": [
+            {
+              "name": "Dr. Sunil J",
+              "designation": "Associate Professor",
+              "qualification": "PhD in Structural Engineering"
+            },
+            {
+              "name": "Ms. Indu Rajan",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech"
+            },
+            {
+              "name": "Ms. Sheeba Kumari J. S.",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech"
+            },
+            {
+              "name": "Mr. Vishnu P.B",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech in Geotechnical Engineering"
+            },
+            {
+              "name": "Ms.Krishnapriya K G",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech"
+            },
+            {
+              "name": "Ms.Sreerema Prasad S",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech"
+            },
+            {
+              "name": "Ms Parvathy V J",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech in Hydraulics Engineering"
+            },
+            {
+              "name": "Mr. Albin V",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech in Structural Engineering and Construction Management"
+            },
+            {
+              "name": "Mr.John K C",
+              "designation": "Assistant Professor",
+              "qualification": "M.E, M.Sc"
+            },
+            {
+              "name": "Ms. Anupama P. L.(On Leave)",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech"
+            },
+            {
+              "name": "Mr AMAL CYRIAC JOSE(On Leave)",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech, MBA"
+            },
+            {
+              "name": "Ms DEEPTHI J.(On Leave)",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech."
+            },
+            {
+              "name": "Ms.Arya U S (On Leave)",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech in Geotechnical Engineering"
+            },
+            {
+              "name": "Ms. Manjusha Muraleedharan (On Leave)",
+              "designation": "Assistant Professor",
+              "qualification": "M. Tech in Structural Engineering & Construction Management, PhD ongoing (2019 to present)"
+            }
+          ],
+          "technical_staff": [
+            {
+              "name": "Ms. Anju V U.",
+              "designation": "",
+              "qualification": "B.tech in Civil Engineering"
+            },
+            {
+              "name": "Stephy Ebanezar",
+              "designation": "",
+              "qualification": ""
+            }
+          ]
+        },
+        {
+          "department": "Computer Science & IT Engineering",
+          "teaching_faculty": [
+            {
+              "name": "Dr.BESHIBA WILSON",
+              "designation": "Principal",
+              "qualification": "M.Tech ,MBA, Ph.D"
+            },
+            {
+              "name": "Prof. Dr. SMITHA J C",
+              "designation": "Professor & HOD",
+              "qualification": "M.Tech ,Ph.D, UGC-NET"
+            },
+            {
+              "name": "PRIYA SEKHAR S",
+              "designation": "Associate Professor",
+              "qualification": "M.E(Computer Science & Engineering)"
+            },
+            {
+              "name": "ASHA A. S.",
+              "designation": "Associate Professor",
+              "qualification": "M.E"
+            },
+            {
+              "name": "LEKSHMI CHANDRAN",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech"
+            },
+            {
+              "name": "CHRISTY JOJY",
+              "designation": "Assistant Professor",
+              "qualification": "M-Tech"
+            },
+            {
+              "name": "AMBILY JANE",
+              "designation": "Assistant Professor",
+              "qualification": "M-Tech"
+            },
+            {
+              "name": "Divya Christopher",
+              "designation": "Assistant Professor in CSE",
+              "qualification": "M.Tech in CSE (Spec. in Dig. Img. Comp)"
+            },
+            {
+              "name": "ANJANA THAMPY S",
+              "designation": "Assistant Professor",
+              "qualification": "M.E (Doing PhD)"
+            },
+            {
+              "name": "SHEEJA BEEVI S",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech"
+            },
+            {
+              "name": "NISHA O.S",
+              "designation": "Assistant Professor",
+              "qualification": "M.E"
+            },
+            {
+              "name": "ASHA CHANDRAN S",
+              "designation": "Assistant Professor",
+              "qualification": "Diploma in Computer Engineering      BE and ME in Computer Science and Engineering(Doing PhD)"
+            },
+            {
+              "name": "ASHA S.",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech (doing PhD)"
+            },
+            {
+              "name": "SRUTHI S",
+              "designation": "Assistant Professor",
+              "qualification": "Mtech in Computer Science Engineering"
+            },
+            {
+              "name": "ABHIJITH M S",
+              "designation": "Assistant Professor in CSE",
+              "qualification": "M- Tech Computer Science and Engineering."
+            },
+            {
+              "name": "Aarsha B R(On Leave)",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech in CSE"
+            },
+            {
+              "name": "ANCHU J P",
+              "designation": "Assistant Professor in CSE",
+              "qualification": "M- Tech Computer Science and Engineering."
+            },
+            {
+              "name": "ANOOJA S K",
+              "designation": "Assistant Professor in CSE",
+              "qualification": "Assistant Professor in CSE M.Tech  Computer Science and Engineering"
+            },
+            {
+              "name": "LIYA A ASHARAF",
+              "designation": "Assistant Professor",
+              "qualification": "M. Tech"
+            }
+          ],
+          "technical_staff": [
+            {
+              "name": "Nisha Joseph K",
+              "designation": "Lab Instructor",
+              "qualification": ""
+            },
+            {
+              "name": "Neethu L",
+              "designation": "Lab Instructor",
+              "qualification": ""
+            },
+            {
+              "name": "Sureshkumar. S",
+              "designation": "Lab Assistant",
+              "qualification": ""
+            }
+          ]
+        },
+        {
+          "department": "Electrical & Electronics Engineering",
+          "teaching_faculty": [
+            {
+              "name": "JEAN DICKSON",
+              "designation": "Assistant Professor & HoD",
+              "qualification": "M.E In Energy Engineering"
+            },
+            {
+              "name": "RENU.V",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech in Power Control & Drives"
+            },
+            {
+              "name": "ASHITHA M",
+              "designation": "Assistant Professor(ADHOC",
+              "qualification": "M.TECH"
+            },
+            {
+              "name": "RIKESH P MATHEW",
+              "designation": "Assistant Professor",
+              "qualification": "M. Tech in Control Systems Engineering, B. Tech in Electrical and Electronics Engineering"
+            },
+            {
+              "name": "SANIJA JOHN",
+              "designation": "ASSISTANT PROFESSOR",
+              "qualification": "M.Tech in Electrical Machines"
+            },
+            {
+              "name": "ARJUN MOHANLAL",
+              "designation": "ASSISTANT PROFESSOR",
+              "qualification": "M.TECH in Power Electronics and Drives"
+            }
+          ],
+          "technical_staff": []
+        },
+        {
+          "department": "Electronics & Communication Engineering",
+          "teaching_faculty": [
+            {
+              "name": "Dr. Liji R.F",
+              "designation": "Associate Professor",
+              "qualification": "Ph.D"
+            },
+            {
+              "name": "SOORYA S R",
+              "designation": "Assistant Professor",
+              "qualification": "M.E"
+            },
+            {
+              "name": "BINCY LOUIS",
+              "designation": "Assistant Professor",
+              "qualification": "M.E"
+            },
+            {
+              "name": "BINU CHACKO",
+              "designation": "Assistant Professor",
+              "qualification": "M.E"
+            },
+            {
+              "name": "GREEJITH.M.G",
+              "designation": "Assistant Professor",
+              "qualification": "M.E"
+            },
+            {
+              "name": "Dr Jinju Joy(On Leave)",
+              "designation": "Assistant Professor (Adhoc)",
+              "qualification": "MTech, Ph.D in Image Processing"
+            },
+            {
+              "name": "GEORGINA GEORGE",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech, Applied Electronics and Instrumentation"
+            }
+          ],
+          "technical_staff": [
+            {
+              "name": "RAJEEV.S.V",
+              "designation": "",
+              "qualification": "ITI-MRTV"
+            },
+            {
+              "name": "DHANYA S.S.",
+              "designation": "",
+              "qualification": "Diploma in Instrument Technology"
+            }
+          ]
+        },
+        {
+          "department": "Mechanical Engineering",
+          "teaching_faculty": [
+            {
+              "name": "Dr Bindu M V",
+              "designation": "Associate Professor and HOD",
+              "qualification": "M.Tech, PhD"
+            },
+            {
+              "name": "Dr. Sreekumar V",
+              "designation": "Professor and Placement Officer",
+              "qualification": "M.Tech, Ph.D"
+            },
+            {
+              "name": "SABARINATH.A.R",
+              "designation": "Associate Professor",
+              "qualification": "M.E in Manufacturing Engg (doing PhD)"
+            },
+            {
+              "name": "DEEJA MILNER L",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech in Machine Design"
+            },
+            {
+              "name": "AEBYSH ABRAHAM",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech in Machine design, Certified Fire Warden"
+            },
+            {
+              "name": "DIJIN J S",
+              "designation": "Assistant Professor",
+              "qualification": "M.Tech in Thermal Science"
+            },
+            {
+              "name": "SREEJITH S. J.",
+              "designation": "Assistant Professor",
+              "qualification": "ME (Manufacturing Engineering), B.Tech (Mechanical engineering)"
+            },
+            {
+              "name": "MANU S",
+              "designation": "Assistant Professor",
+              "qualification": "M. Tech (Machine Design)"
+            },
+            {
+              "name": "JOBY JO G. S",
+              "designation": "Assistant Professor",
+              "qualification": "M. Tech (Thermal Engineering )"
+            }
+          ],
+          "technical_staff": [
+            {
+              "name": "ABY.C.JACOB",
+              "designation": "",
+              "qualification": "B.Tech"
+            },
+            {
+              "name": "JOSE GEORGE",
+              "designation": "",
+              "qualification": "ITI"
+            },
+            {
+              "name": "Sreekumaran Assari P.",
+              "designation": "",
+              "qualification": "Diploma in Automobile Engg."
+            }
+          ]
+        },
+        {
+          "department": "Management Studies",
+          "teaching_faculty": [
+            {
+              "name": "Dr. Syamnath R.S",
+              "designation": "Assistant Professor",
+              "qualification": "MBA, LLB, Ph. D"
+            },
+            {
+              "name": "Dr. Ranjit Thomas",
+              "designation": "Assistant Professor",
+              "qualification": "BE, MBA, Ph.D."
+            },
+            {
+              "name": "Fr. Varghese Joseph",
+              "designation": "Assistant Professor",
+              "qualification": "MBA"
+            },
+            {
+              "name": "JENY R. J.",
+              "designation": "Assistant professor",
+              "qualification": "MBA,UGC – NET"
+            },
+            {
+              "name": "Mr. Ninu John",
+              "designation": "Assistant Professor",
+              "qualification": "B. Tech, MBA"
+            },
+            {
+              "name": "Ms. Cino Joseph",
+              "designation": "Assistant Professor",
+              "qualification": "BCom, MBA,Ph.D(pursuing)"
+            },
+            {
+              "name": "Ms. Anakha T Nair",
+              "designation": "Assistant Professor",
+              "qualification": "BE(civil), MBA (OPERATIONS AND FINANCE)"
+            },
+            {
+              "name": "Ms.ATHIRA RANI A R",
+              "designation": "Assst. Professor",
+              "qualification": "BSc. Computer Science  , MBA (Finance & Operations)"
+            }
+          ],
+          "technical_staff": []
+        },
+        {
+          "department": "Master of Computer Applications",
+          "teaching_faculty": [
+            {
+              "name": "BISMI K CHARLEYS",
+              "designation": "HoD",
+              "qualification": "MCA, doing PhD"
+            },
+            {
+              "name": "SELMA JOSEPH A(On Leave)",
+              "designation": "Assistant Professor",
+              "qualification": "MCA"
+            },
+            {
+              "name": "SHERIN JOSEPH",
+              "designation": "Asst.Professor",
+              "qualification": "MCA, doing PhD"
+            },
+            {
+              "name": "RAMYA KRISHNAN S( Onleave)",
+              "designation": "Asst Professor",
+              "qualification": "MCA"
+            },
+            {
+              "name": "MEENU V S",
+              "designation": "Assistant Professor",
+              "qualification": "MCA"
+            }
+          ],
+          "technical_staff": [
+            {
+              "name": "Sureshkumar. S",
+              "designation": "Lab Assistant",
+              "qualification": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LMIHMCT — Lourdes Matha Institute of Hotel Management & Catering Technology",
+      "website": "https://lmihmct.org",
+      "departments": [
+        {
+          "department": "Hotel Management & Catering Technology",
+          "teaching_faculty": [
+            {
+              "name": "MR. JOJEE PAUL.S",
+              "designation": "Vice Principal | Associate Professor",
+              "qualification": "M.Phil, M.SC (HOTEL MGMT), MTM",
+              "email": "jojee@lmihmct.org",
+              "phone": "9495 186 370"
+            },
+            {
+              "name": "DR. SUNI MARY VARGHESE",
+              "designation": "HOD | Associate ProfessorB.Voc, Food Processing",
+              "qualification": "Ph.D. M.Sc (Food & Nutrition), M.Sc (Tourism & Hospitality Mgmt), B.Ed, JRF",
+              "email": "sunimary@lmihmct.org",
+              "phone": "9495 576 103"
+            },
+            {
+              "name": "MR.AJITHKUMAR.P.S",
+              "designation": "AssociateProfessor | HOD",
+              "qualification": "M.Sc HOTEL MGMT, MTM. MBA (Tourism & Hotel Management)",
+              "email": "ajithkumar@lmihmct.org",
+              "phone": "9447 471 851"
+            },
+            {
+              "name": "MR. SHIBU.M.O",
+              "designation": "HOD & Associate Professor",
+              "qualification": "M.Sc (Tourism & Hospitality Management), B.Sc in Hotel & Hospitality Administration",
+              "email": "shibu@lmihmct.org",
+              "phone": "9061144955"
+            },
+            {
+              "name": "MR. N.D JEBA MOHAN DAVID",
+              "designation": "Associate Professor",
+              "qualification": "M.Sc HOTEL MGMT, BHM",
+              "email": "jebamohan@lmihmct.org",
+              "phone": "9994 829 152, 8281 890 356"
+            },
+            {
+              "name": "MR. LIJU SANKAR",
+              "designation": "Assistant Professor | Department of Food Studies",
+              "qualification": "B.Sc (Hospitality Admn)",
+              "email": "lijusankar@lmihmct.org",
+              "phone": "9995 380 104"
+            },
+            {
+              "name": "MR. GIJO THAMAS",
+              "designation": "Assistant Professor | Rooms Division",
+              "qualification": "BHM, PGDTM",
+              "email": "gijo@lmihmct.org",
+              "phone": "9447589767"
+            },
+            {
+              "name": "MS Tintu Simon",
+              "designation": "Assistant Professor | B.Voc Food Processing",
+              "qualification": "Msc Food Science & Technology, BSc Zoology",
+              "email": "tintu@lmihmct.org",
+              "phone": "9072812173"
+            },
+            {
+              "name": "Mr.Sanju Varghese",
+              "designation": "Assistant Professor | Department of Food Studies",
+              "qualification": "BHM.",
+              "email": "sanju@lmihmct.org",
+              "phone": "9562537009"
+            },
+            {
+              "name": "MR. Joshin Mathew",
+              "designation": "Assistant Professor | Room Division Department",
+              "qualification": "Integrated MBA in Hospitality, Travel & Tourism, NET",
+              "email": "joshin@lmihmct.org",
+              "phone": "8075905210"
+            },
+            {
+              "name": "MR. Sarath V S",
+              "designation": "Assistant Professor |Rooms Division Department",
+              "qualification": "BHM, MTM (Tourism Mgmt)",
+              "email": "sarath@lmihmct.org",
+              "phone": "9496662048"
+            },
+            {
+              "name": "MS. LINU FRANCIS",
+              "designation": "Assistant Professor | Management Allied Subjects",
+              "qualification": "M.Com Finance & Accounting, B.Com Tax Procedure and Practices",
+              "email": "linu@lmihmct.org",
+              "phone": "9846883726"
+            },
+            {
+              "name": "Mr. Vijesh TM",
+              "designation": "Assistant Professor |Department of Food Studies",
+              "qualification": "MBA (HR), BHM",
+              "email": "vijesh@lmihmct.org",
+              "phone": "7012241314"
+            },
+            {
+              "name": "Mr. Pavin Johnson",
+              "designation": "Assistant Professor",
+              "qualification": "",
+              "email": "",
+              "phone": ""
+            }
+          ],
+          "technical_staff": []
+        }
+      ]
+    },
+    {
+      "name": "LMIMS — Lourdes Matha Institute of Management Studies",
+      "website": "https://lims.ac.in",
+      "departments": []
+    },
+    {
+      "name": "LMCAS — Lourdes Matha College of Arts & Science",
+      "website": "https://lmcas.org",
+      "departments": [
+        {
+          "department": "Department of English",
+          "teaching_faculty": [
+            {
+              "name": "ANUSREE G",
+              "designation": "HOD",
+              "qualification": "MA English, UGC NET in English Language & Literature",
+              "email": "sreeann28@gmail.com"
+            },
+            {
+              "name": "GEETHU MOHANAN V",
+              "designation": "Assistant Professor",
+              "qualification": "B.Ed English, SET, M.A English language and literature",
+              "email": "geethumohanan000@gmail.com"
+            },
+            {
+              "name": "Dr. Reshma VR",
+              "designation": "Assistant Professor",
+              "qualification": "MA, MPhil ,UGC NET, PHD",
+              "email": "reshmapoovar@gmail.com"
+            },
+            {
+              "name": "Anna Thomas",
+              "designation": "Assistant Professor",
+              "qualification": "MA, UGC NET, GATE",
+              "email": "annathomasimp@gmail.com"
+            }
+          ],
+          "technical_staff": []
+        },
+        {
+          "department": "Department of Hindi",
+          "teaching_faculty": [
+            {
+              "name": "Dr. Athira Babu",
+              "designation": "Assistant Professor",
+              "qualification": "MA PhD ( oriental studies-HINDI)",
+              "email": "athiraarun111@gmail.com"
+            }
+          ],
+          "technical_staff": []
+        },
+        {
+          "department": "Department of Malayalam",
+          "teaching_faculty": [
+            {
+              "name": "Sophiya Joy C",
+              "designation": "Assistant Professor",
+              "qualification": "MA Malayalam, B.Ed Malayalam, NET, JRF",
+              "email": "sophiyajoyc98@gmail.com"
+            }
+          ],
+          "technical_staff": []
+        },
+        {
+          "department": "Department of Commerce",
+          "teaching_faculty": [
+            {
+              "name": "NANDINI DEVI. S.S",
+              "designation": "HOD",
+              "qualification": "M. Com, M. Ed, MBA, SET, NET",
+              "email": "nandinidevi392@gmail.com"
+            },
+            {
+              "name": "LIGI SAJI",
+              "designation": "Assistant Professor",
+              "qualification": "M.com",
+              "email": "ligisaji234@gmail.com"
+            },
+            {
+              "name": "Anusha R Nair",
+              "designation": "Assistant Professor",
+              "qualification": "M.com (finance), NET( COMMERCE), HDC & BM",
+              "email": "anushaadarsh669@gmail.com"
+            }
+          ],
+          "technical_staff": []
+        },
+        {
+          "department": "Department of BCA",
+          "teaching_faculty": [
+            {
+              "name": "ANAMIKA U R",
+              "designation": "HOD",
+              "qualification": "MSc Computer Science, PhD ( doing )",
+              "email": "anamika18nair@gmail.com"
+            },
+            {
+              "name": "Sariga V M",
+              "designation": "Assistant Professor",
+              "qualification": "MCA",
+              "email": "sarigavmsarigavm@gmail.com"
+            }
+          ],
+          "technical_staff": []
+        }
+      ]
+    }
+  ]
+}

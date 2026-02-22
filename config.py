@@ -40,6 +40,10 @@ TTS_SAMPLE_RATE = 22050  # Piper default output rate
 # ── Database ──────────────────────────────────────────────────
 DB_PATH = str(DATA_DIR / "campus.db")
 
+# ── Crawled Data Files ────────────────────────────────────────
+FACULTY_DATA_PATH = str(DATA_DIR / "faculty_summary.json")
+CRAWLED_DATA_PATH = str(DATA_DIR / "lourdes_matha_all_data.json")
+
 # ── Campus Navigation Map ────────────────────────────────────
 CAMPUS_MAP_PATH = str(DATA_DIR / "campus_map.json")
 

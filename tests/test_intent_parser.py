@@ -15,8 +15,13 @@ class TestIntentParser:
     def setup_parser(self):
         self.parser = IntentParser(
             location_names=["Main Gate", "Central Library", "CS Department", "Cafeteria"],
-            faculty_names=["Dr. Rajesh Kumar", "Dr. Priya Sharma"],
-            department_names=["Computer Science and Engineering", "Mechanical Engineering"],
+            faculty_names=["Dr. Rajesh Kumar", "Dr. Priya Sharma", "Dr. Sunil J"],
+            department_names=[
+                "Computer Science and Engineering",
+                "Mechanical Engineering",
+                "Civil Engineering",
+                "Hotel Management",
+            ],
             fuzzy_threshold=70,
         )
 
@@ -64,3 +69,35 @@ class TestIntentParser:
         result = self.parser.parse("")
         assert result.intent == "unknown"
         assert result.confidence == 0.0
+
+    # ── Campus info intent ────────────────────────────────────
+
+    def test_campus_info_tell_me_about(self):
+        result = self.parser.parse("tell me about the hostel")
+        assert result.intent == "campus_info"
+
+    def test_campus_info_keyword_library(self):
+        result = self.parser.parse("library")
+        assert result.intent == "campus_info"
+
+    def test_campus_info_keyword_admission(self):
+        result = self.parser.parse("what about admission process")
+        assert result.intent == "campus_info"
+
+    def test_campus_info_keyword_placement(self):
+        result = self.parser.parse("placement information")
+        assert result.intent == "campus_info"
+
+    def test_campus_info_is_there(self):
+        result = self.parser.parse("is there a sports ground")
+        assert result.intent == "campus_info"
+
+    # ── Department info with new keywords ─────────────────────
+
+    def test_department_info_hotel_management(self):
+        result = self.parser.parse("tell me about hotel management department")
+        assert result.intent == "department_info"
+
+    def test_department_info_civil(self):
+        result = self.parser.parse("civil engineering department")
+        assert result.intent == "department_info"

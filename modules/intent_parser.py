@@ -13,7 +13,8 @@ from fuzzywuzzy import fuzz
 class ParsedIntent:
     """Result of intent parsing."""
     intent: str       # navigation, faculty_info, student_lookup,
-                      # department_info, greeting, farewell, help, unknown
+                      # department_info, campus_info, greeting,
+                      # farewell, help, unknown
     confidence: float  # 0.0 to 1.0
     entities: dict = field(default_factory=dict)
     raw_text: str = ""
@@ -62,8 +63,31 @@ class IntentParser:
         (
             "department_info",
             re.compile(
-                r"\b(department|(?:computer\s+science|ece|mechanical|civil|it)"
-                r"\s+(?:department|dept)|what\s+departments?)\b",
+                r"\b(department|(?:computer\s+science|ece|mechanical|civil|it"
+                r"|electrical|electronics|management|mca|bca|commerce"
+                r"|english|hindi|malayalam|hotel\s+management"
+                r"|applied\s+science|humanities)"
+                r"\s*(?:department|dept)?"
+                r"|what\s+departments?"
+                r"|which\s+college)\b",
+                re.IGNORECASE,
+            ),
+        ),
+        # Campus info — general questions about campus life and facilities
+        (
+            "campus_info",
+            re.compile(
+                r"\b(tell\s+me\s+about"
+                r"|(?:what|where)\s+(?:is|are)\s+the"
+                r"|information\s+(?:about|on|regarding)"
+                r"|do\s+you\s+have\s+(?:a\s+)?"
+                r"|is\s+there\s+(?:a\s+|any\s+)?"
+                r"|about\s+the"
+                r"|hostel|library|admission|placement|canteen|cafeteria"
+                r"|sports|lab|club|committee|seminar|workshop"
+                r"|history|vision|mission|course|programme|program"
+                r"|scholarship|fees?|facility|facilities|auditorium"
+                r"|transportation|bus|nss|ncc)\b",
                 re.IGNORECASE,
             ),
         ),
