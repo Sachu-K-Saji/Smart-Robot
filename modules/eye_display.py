@@ -6,6 +6,7 @@ Runs in a dedicated thread at 30 FPS.
 On the Pi, this targets a 2.0" SPI TFT (320x240) via the framebuffer.
 On Windows, it opens a standard pygame window for development/preview.
 """
+import atexit
 import logging
 import math
 import random
@@ -13,14 +14,21 @@ import threading
 import time
 from enum import Enum
 
-import pygame
+import platform
+
+try:
+    import pygame
+    # macOS crashes if pygame runs in a background thread (SDL2 requires main thread)
+    PYGAME_AVAILABLE = platform.system() != "Darwin"
+except ImportError:
+    PYGAME_AVAILABLE = False
 
 from config import (
     DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_FPS,
     EYE_BG_COLOR, SCLERA_COLOR, IRIS_COLOR, PUPIL_COLOR,
     LEFT_EYE_CENTER, RIGHT_EYE_CENTER,
     SCLERA_WIDTH, SCLERA_HEIGHT, IRIS_RADIUS, PUPIL_RADIUS,
-    IS_PI,
+    IS_PI, ERROR_IRIS_COLOR, IRIS_MARGIN,
 )
 
 logger = logging.getLogger(__name__)
@@ -64,13 +72,29 @@ class EyeDisplay:
         with self._lock:
             return self._expression
 
+    # Terminal display symbols for each expression
+    _TERMINAL_ICONS = {
+        Expression.IDLE:      "(o_o)  Idle",
+        Expression.LISTENING: "(O_O)  Listening...",
+        Expression.THINKING:  "(>_<)  Thinking...",
+        Expression.SPEAKING:  "(^_^)  Speaking...",
+        Expression.ERROR:     "(X_X)  Error!",
+        Expression.SLEEPING:  "(-_-)  Sleeping...",
+    }
+
     @expression.setter
     def expression(self, value: Expression):
         with self._lock:
+            if self._expression != value and not PYGAME_AVAILABLE:
+                icon = self._TERMINAL_ICONS.get(value, str(value))
+                print(f"  {icon}")
             self._expression = value
 
     def start(self):
         """Start the display thread."""
+        if not PYGAME_AVAILABLE:
+            logger.info("Eye display: terminal mode (pygame unavailable on macOS).")
+            return
         self._running = True
         self._thread = threading.Thread(target=self._run, daemon=True)
         self._thread.start()
@@ -83,6 +107,15 @@ class EyeDisplay:
             self._thread.join(timeout=2.0)
         logger.info("Eye display stopped.")
 
+    @staticmethod
+    def _cleanup_framebuffer(screen):
+        """Fill the screen with black and flip, ensuring a clean framebuffer on exit."""
+        try:
+            screen.fill((0, 0, 0))
+            pygame.display.flip()
+        except Exception as e:
+            logger.debug(f"Framebuffer cleanup failed (non-critical): {e}")
+
     def _run(self):
         """Main display loop running at DISPLAY_FPS."""
         try:
@@ -91,6 +124,7 @@ class EyeDisplay:
             logger.error(f"Failed to initialize pygame: {e}")
             return
 
+        screen = None
         try:
             if IS_PI:
                 import os
@@ -101,40 +135,44 @@ class EyeDisplay:
             else:
                 screen = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
                 pygame.display.set_caption("Campus Robot Eyes")
+
+            # Register atexit handler to clean up framebuffer
+            atexit.register(self._cleanup_framebuffer, screen)
+
+            clock = pygame.time.Clock()
+            self._time_base = time.time()
+
+            while self._running:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        self._running = False
+                        break
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                        self._running = False
+                        break
+
+                dt = clock.tick(DISPLAY_FPS) / 1000.0
+                elapsed = time.time() - self._time_base
+
+                self._update_animation(dt, elapsed)
+
+                screen.fill(EYE_BG_COLOR)
+                self._draw_eye(screen, LEFT_EYE_CENTER)
+                self._draw_eye(screen, RIGHT_EYE_CENTER)
+                pygame.display.flip()
+
         except pygame.error as e:
             logger.error(f"Failed to create display: {e}")
+        finally:
+            if screen is not None:
+                self._cleanup_framebuffer(screen)
             pygame.quit()
-            return
-
-        clock = pygame.time.Clock()
-        self._time_base = time.time()
-
-        while self._running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self._running = False
-                    break
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                    self._running = False
-                    break
-
-            dt = clock.tick(DISPLAY_FPS) / 1000.0
-            elapsed = time.time() - self._time_base
-
-            self._update_animation(dt, elapsed)
-
-            screen.fill(EYE_BG_COLOR)
-            self._draw_eye(screen, LEFT_EYE_CENTER)
-            self._draw_eye(screen, RIGHT_EYE_CENTER)
-            pygame.display.flip()
-
-        pygame.quit()
 
     def _update_animation(self, dt: float, elapsed: float):
         """Update blink, iris position, and expression-specific animations."""
         expr = self.expression
 
-        # ── Blinking ──────────────────────────────────────────
+        # -- Blinking --
         self._blink_timer += dt
         if expr == Expression.IDLE:
             interval = self._blink_interval + random.uniform(-0.5, 1.0)
@@ -152,11 +190,14 @@ class EyeDisplay:
 
         if self._is_blinking:
             self._blink_progress += dt / self._blink_duration
+            if self._blink_progress > 2.0:
+                self._blink_progress = 2.0
+            self._blink_progress = min(self._blink_progress, 2.0)
             if self._blink_progress >= 2.0:
                 self._is_blinking = False
                 self._blink_progress = 0.0
 
-        # ── Iris movement by expression ───────────────────────
+        # -- Iris movement by expression --
         if expr == Expression.IDLE:
             self._iris_target_x = math.sin(elapsed * 0.5) * 5
             self._iris_target_y = math.cos(elapsed * 0.3) * 3
@@ -181,7 +222,7 @@ class EyeDisplay:
         cx, cy = center
         expr = self.expression
 
-        # ── Sclera (white oval) ───────────────────────────────
+        # -- Sclera (white oval) --
         sclera_h = SCLERA_HEIGHT
         if expr == Expression.LISTENING:
             sclera_h = int(SCLERA_HEIGHT * 1.2)
@@ -201,25 +242,25 @@ class EyeDisplay:
         if sclera_h < 8:
             return
 
-        # ── Iris (dark circle) ────────────────────────────────
+        # -- Iris (dark circle) --
         iris_x = cx + int(self._iris_offset_x)
         iris_y = cy + int(self._iris_offset_y)
 
-        max_offset_x = SCLERA_WIDTH - IRIS_RADIUS - 4
-        max_offset_y = sclera_h - IRIS_RADIUS - 4
+        max_offset_x = SCLERA_WIDTH - IRIS_RADIUS - IRIS_MARGIN
+        max_offset_y = sclera_h - IRIS_RADIUS - IRIS_MARGIN
         iris_x = max(cx - max_offset_x, min(cx + max_offset_x, iris_x))
         iris_y = max(cy - max_offset_y, min(cy + max_offset_y, iris_y))
 
         iris_color = IRIS_COLOR
         if expr == Expression.ERROR:
-            iris_color = (180, 0, 0)
+            iris_color = ERROR_IRIS_COLOR
 
         pygame.draw.circle(screen, iris_color, (iris_x, iris_y), IRIS_RADIUS)
 
-        # ── Pupil (small black circle) ────────────────────────
+        # -- Pupil (small black circle) --
         pygame.draw.circle(screen, PUPIL_COLOR, (iris_x, iris_y), PUPIL_RADIUS)
 
-        # ── Highlight (specular reflection dot) ───────────────
+        # -- Highlight (specular reflection dot) --
         highlight_x = iris_x - 4
         highlight_y = iris_y - 4
         pygame.draw.circle(screen, (255, 255, 255), (highlight_x, highlight_y), 3)

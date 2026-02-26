@@ -55,7 +55,9 @@ class TestCampusNavigator:
 
     def test_nonexistent_node(self):
         result = self.nav.find_shortest_path("A", "Z")
-        assert result is None
+        assert result["ok"] is False
+        assert result["error_type"] == "invalid_destination"
+        assert "suggestion" in result
 
     def test_directions_text(self):
         text = self.nav.get_directions_text("A", "C")
@@ -66,3 +68,83 @@ class TestCampusNavigator:
     def test_get_node_name(self):
         assert self.nav.get_node_name("A") == "Point A"
         assert self.nav.get_node_name("nonexistent") == "nonexistent"
+
+    # ── Rich error context ─────────────────────────────────────
+
+    def test_success_has_ok_true(self):
+        result = self.nav.find_shortest_path("A", "B")
+        assert result["ok"] is True
+
+    def test_invalid_source_error(self):
+        result = self.nav.find_shortest_path("Z", "B")
+        assert result["ok"] is False
+        assert result["error_type"] == "invalid_source"
+        assert "message" in result
+
+    def test_invalid_destination_error(self):
+        result = self.nav.find_shortest_path("A", "Z")
+        assert result["ok"] is False
+        assert result["error_type"] == "invalid_destination"
+
+    def test_error_has_suggestion(self):
+        """Invalid node error should suggest a similar node."""
+        result = self.nav.find_shortest_path("A", "Point")
+        assert result["ok"] is False
+        # "Point" might match "Point A" etc.
+        assert "suggestion" in result
+
+    # ── Fuzzy node lookup ──────────────────────────────────────
+
+    def test_fuzzy_find_exact(self):
+        node = self.nav.find_nearest_node_by_name("Point A")
+        assert node == "A"
+
+    def test_fuzzy_find_substring(self):
+        node = self.nav.find_nearest_node_by_name("Point B")
+        assert node == "B"
+
+    def test_fuzzy_find_partial(self):
+        node = self.nav.find_nearest_node_by_name("point")
+        assert node is not None
+        assert node in ["A", "B", "C", "D"]
+
+    def test_fuzzy_find_no_match(self):
+        node = self.nav.find_nearest_node_by_name("xyzzy")
+        assert node is None
+
+    # ── Graph validation ───────────────────────────────────────
+
+    def test_disconnected_graph_warning(self, tmp_path):
+        """A disconnected graph should still load, just log warnings."""
+        test_map = {
+            "nodes": {
+                "X": {"name": "Isolated X", "x": 0, "y": 0, "type": "building"},
+                "Y": {"name": "Isolated Y", "x": 100, "y": 0, "type": "building"},
+            },
+            "edges": [],  # No connections
+        }
+        map_path = str(tmp_path / "disconnected_map.json")
+        with open(map_path, "w") as f:
+            json.dump(test_map, f)
+
+        # Should not raise, just log warnings
+        nav = CampusNavigator(map_path)
+        assert len(nav.get_all_node_ids()) == 2
+
+    def test_no_path_between_components(self, tmp_path):
+        """No path should return rich error dict."""
+        test_map = {
+            "nodes": {
+                "X": {"name": "Island X", "x": 0, "y": 0, "type": "building"},
+                "Y": {"name": "Island Y", "x": 100, "y": 0, "type": "building"},
+            },
+            "edges": [],
+        }
+        map_path = str(tmp_path / "islands_map.json")
+        with open(map_path, "w") as f:
+            json.dump(test_map, f)
+
+        nav = CampusNavigator(map_path)
+        result = nav.find_shortest_path("X", "Y")
+        assert result["ok"] is False
+        assert result["error_type"] == "no_path"

@@ -132,3 +132,47 @@ class TestCampusDatabase:
     def test_search_knowledge_base_no_results(self):
         results = self.db.search_knowledge_base("xyzzy nonexistent topic")
         assert len(results) == 0
+
+    # ── FTS5 special character handling ─────────────────────────
+
+    def test_fts5_special_chars_plus(self):
+        """FTS5 query with '+' should not crash."""
+        results = self.db.search_faculty("Dr. + Rajesh")
+        assert isinstance(results, list)
+
+    def test_fts5_special_chars_minus(self):
+        """FTS5 query with '-' should not crash."""
+        results = self.db.search_faculty("Rajesh - Kumar")
+        assert isinstance(results, list)
+
+    def test_fts5_special_chars_star(self):
+        """FTS5 query with '*' should not crash."""
+        results = self.db.search_knowledge_base("library * books")
+        assert isinstance(results, list)
+
+    def test_fts5_special_chars_quotes(self):
+        """FTS5 query with double quotes should not crash."""
+        results = self.db.search_faculty('"Rajesh"')
+        assert isinstance(results, list)
+
+    # ── New JOIN-based methods ─────────────────────────────────
+
+    def test_search_student_with_department(self):
+        """search_student_with_department should include department_name."""
+        results = self.db.search_student_with_department("CS2024001")
+        assert len(results) == 1
+        assert results[0]["name"] == "Aravind Shankar"
+        assert "department_name" in results[0]
+        assert "Computer Science" in results[0]["department_name"]
+
+    def test_search_student_with_department_by_name(self):
+        results = self.db.search_student_with_department("Divya")
+        assert len(results) >= 1
+        assert "department_name" in results[0]
+
+    def test_get_department_with_head(self):
+        """get_department_with_head should include head_name."""
+        dept = self.db.get_department_with_head("Computer Science and Engineering")
+        assert dept is not None
+        assert "head_name" in dept
+        assert dept["head_name"] is not None

@@ -6,7 +6,7 @@ import logging
 import os
 import time
 
-from config import VIDEO_DIR
+from config import VIDEO_DIR, MAX_VIDEO_FILE_SIZE_MB
 
 logger = logging.getLogger(__name__)
 
@@ -55,6 +55,11 @@ class VideoPlayer:
             logger.error(f"Video file not found: {video_path}")
             return False
 
+        file_size_mb = os.path.getsize(video_path) / (1024 * 1024)
+        if file_size_mb > MAX_VIDEO_FILE_SIZE_MB:
+            logger.error(f"Video file too large: {file_size_mb:.1f}MB > {MAX_VIDEO_FILE_SIZE_MB}MB")
+            return False
+
         media = self._instance.media_new(video_path)
         self._player.set_media(media)
         self._player.set_fullscreen(fullscreen)
@@ -75,17 +80,43 @@ class VideoPlayer:
             return self._player.is_playing() == 1
         return False
 
-    def wait_for_completion(self, poll_interval: float = 0.5):
-        """Block until the current video finishes playing."""
+    def wait_for_completion(self, timeout: float = 300, poll_interval: float = 0.5) -> bool:
+        """
+        Block until the current video finishes playing.
+
+        Args:
+            timeout: Maximum seconds to wait before giving up.
+            poll_interval: Seconds between playback status checks.
+
+        Returns:
+            True if playback completed normally, False if timed out.
+        """
         if self.is_mock:
-            return
+            return True
+        deadline = time.time() + timeout
         while self.is_playing():
+            if time.time() >= deadline:
+                logger.warning("Video playback timed out")
+                self.stop()
+                return False
             time.sleep(poll_interval)
+        return True
 
     def close(self):
-        """Release VLC resources."""
-        if self._player:
-            self._player.stop()
-            self._player.release()
-        if self._instance:
-            self._instance.release()
+        """Release VLC resources. Each step is wrapped individually so one failure
+        does not prevent cleanup of subsequent resources."""
+        try:
+            if self._player:
+                self._player.stop()
+        except Exception as e:
+            logger.error(f"Error stopping player: {e}")
+        try:
+            if self._player:
+                self._player.release()
+        except Exception as e:
+            logger.error(f"Error releasing player: {e}")
+        try:
+            if self._instance:
+                self._instance.release()
+        except Exception as e:
+            logger.error(f"Error releasing VLC instance: {e}")

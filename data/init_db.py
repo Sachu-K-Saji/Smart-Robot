@@ -105,6 +105,14 @@ def create_database(db_path: str = None):
         CREATE VIRTUAL TABLE knowledge_base_fts USING fts5(
             page_title, content, content='knowledge_base', content_rowid='id'
         );
+
+        -- Indexes for query performance
+        CREATE INDEX IF NOT EXISTS idx_faculty_name ON faculty(name);
+        CREATE INDEX IF NOT EXISTS idx_faculty_department_id ON faculty(department_id);
+        CREATE INDEX IF NOT EXISTS idx_students_roll_number ON students(roll_number);
+        CREATE INDEX IF NOT EXISTS idx_students_department_id ON students(department_id);
+        CREATE INDEX IF NOT EXISTS idx_locations_node_id ON locations(node_id);
+        CREATE INDEX IF NOT EXISTS idx_departments_college_id ON departments(college_id);
     """)
 
     # ── Sample College ───────────────────────────────────────
